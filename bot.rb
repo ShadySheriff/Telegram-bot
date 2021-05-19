@@ -4,14 +4,6 @@ require 'httparty'
 
   token = '1721382415:AAHCeN8oEHW7gIH3705IAXV_4lng8wWaZRY'
   
-def ranker_error(response)
-  (response.body.nil? || response.body.empty?) || response.code != 200
-end
-
-def log_error (error)
-  Services.statstd_client.increment("learn_to_rank.errors.#{error}")
-end
-
 
   def scraper (word)
     url = 'https://metymology.ch'
