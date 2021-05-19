@@ -9,10 +9,6 @@ require 'httparty'
     url = 'https://metymology.ch'
     unparsed_page = HTTParty.get(url)
 
-    if ranker_error(unparsed_page)
-      log_error "ranker_error"
-      return nil
-    end
 
     parsed_page = Nokogiri::HTML(unparsed_page)
     alphabet = parsed_page.css('ul.wpg-list-items')  #has 26 blocks in alphabetical order
@@ -24,9 +20,6 @@ require 'httparty'
                  found_the_word = true;
                  term_url = term.attributes["href"].value  
                  unparsed_term = HTTParty.get(term_url)
-                 if ranker_error(unparsed_term)
-                  log_error "ranker_error"
-                  return nil
                 end
             
                  parsed_term = Nokogiri::HTML(unparsed_term)
