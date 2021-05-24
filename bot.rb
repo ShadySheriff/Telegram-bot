@@ -1,13 +1,13 @@
 require 'telegram/bot'
 require 'nokogiri'
-require 'httparty'
+require 'net/http'
 
   token = '1721382415:AAHCeN8oEHW7gIH3705IAXV_4lng8wWaZRY'
   
 
   def scraper (word)
-    url = 'https://metymology.ch'
-    unparsed_page = HTTParty.get(url)
+    url = URI'https://metymology.ch'
+    unparsed_page = Net::HTTP.get(url)
 
 
     parsed_page = Nokogiri::HTML(unparsed_page)
@@ -18,8 +18,8 @@ require 'httparty'
    letter_block.each do |term|
                   if (word.downcase.eql?(term.text.downcase))
                  found_the_word = true;
-                 term_url = term.attributes["href"].value  
-                 unparsed_term = HTTParty.get(term_url)
+                 term_url = URI(term.attributes["href"].value)  
+                 unparsed_term = Net::HTTP.get(term_url)
                 end
             
                  parsed_term = Nokogiri::HTML(unparsed_term)
