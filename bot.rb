@@ -3,11 +3,11 @@ require 'nokogiri'
 require 'net/http'
 
   token = '1721382415:AAHCeN8oEHW7gIH3705IAXV_4lng8wWaZRY'
-  
+
 
   def scraper (word)
-    url = URI'https://metymology.ch'
-    unparsed_page = Net::HTTP.get(url)
+    uri = URI'https://metymology.ch'
+    unparsed_page = Net::HTTP.get(uri)
 
 
     parsed_page = Nokogiri::HTML(unparsed_page)
@@ -18,10 +18,8 @@ require 'net/http'
    letter_block.each do |term|
                   if (word.downcase.eql?(term.text.downcase))
                  found_the_word = true;
-                 term_url = URI(term.attributes["href"].value)  
-                 unparsed_term = Net::HTTP.get(term_url)
-                end
-            
+                 term_uri = URI(term.attributes["href"].value)  
+                 unparsed_term = Net::HTTP.get(term_uri)
                  parsed_term = Nokogiri::HTML(unparsed_term)
                  description = parsed_term.css('div.entry-content.clr').text
                  return description
@@ -30,7 +28,7 @@ require 'net/http'
    
    end
   
-   return "Sorry, This word isn't in my dictionary, Care to submit it? "
+   return "Sorry, This word isn't in my dictionary"
    end
   
 
@@ -55,3 +53,5 @@ end
     end
    
 end
+
+
